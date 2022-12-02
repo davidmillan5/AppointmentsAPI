@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.lab.appointments.model.Affiliates;
@@ -57,6 +58,7 @@ public class AppointmentsControllers {
 
 	@PostMapping("/post/")
 	public ResponseEntity<Appointments> saveAppointments(@Valid @RequestBody Appointments appointments) {
+		try {
 		Optional<Affiliates> affiliatesOptional = affiliatesRepository.findById(appointments.getAffiliates().getId());
 		Optional<Tests> testsOptional = testsrepository.findById(appointments.getTests().getId());
 
@@ -73,17 +75,27 @@ public class AppointmentsControllers {
 				.buildAndExpand(saveAppointments.getId()).toUri();
 
 		return ResponseEntity.created(location).body(saveAppointments);
+	}catch(Exception e) {
+		throw new ResponseStatusException(
+				HttpStatus.NOT_FOUND,"Appointment Not Found",e);
+	}
 
 	}
 
 	@GetMapping("/getlist/")
 	public List<Appointments> lists() {
+		try {
 		return appointmentsServices.findAll();
+		}catch(Exception e) {
+			throw new ResponseStatusException(
+					HttpStatus.NO_CONTENT,"Not Appointment Content Present",e);
+		}
 	}
 
 	@PutMapping("/put/{id}")
 	public ResponseEntity<Appointments> updateApointments(@Valid @RequestBody Appointments appointments,
 			@PathVariable Integer id) {
+		try {
 		Optional<Affiliates> affiliatesOptional = affiliatesRepository.findById(appointments.getAffiliates().getId());
 		Optional<Tests> testsOptional = testsrepository.findById(appointments.getTests().getId());
 
@@ -105,11 +117,16 @@ public class AppointmentsControllers {
 		appointmentsRepository.save(appointments);
 
 		return ResponseEntity.noContent().build();
+		}catch(Exception e) {
+			throw new ResponseStatusException(
+					HttpStatus.NOT_FOUND,"Appointment Not Found for Update",e);
+		}
 
 	}
 
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<Appointments> deleteAppointment(@PathVariable Integer id) {
+		try {
 		Optional<Appointments> appointmentsOptional = appointmentsRepository.findById(id);
 
 		if (!appointmentsOptional.isPresent()) {
@@ -118,16 +135,30 @@ public class AppointmentsControllers {
 
 		appointmentsRepository.delete(appointmentsOptional.get());
 		return ResponseEntity.noContent().build();
+		}catch(Exception e) {
+			throw new ResponseStatusException(
+					HttpStatus.NO_CONTENT,"Not Appointment Present",e);
+		}
 	}
 
 	@GetMapping("/getbyid/{id}")
 	public Appointments getbyid(@PathVariable Integer id) {
+		try {
 		return appointmentsServices.findById(id);
+		}catch(Exception e) {
+			throw new ResponseStatusException(
+					HttpStatus.NOT_FOUND,"Appointment Not Found",e);
+		}
 	}
 
 	@GetMapping("/getbyaffiliates/{id}")
 	public Optional<Affiliates> getbyidAffiliates(@PathVariable Integer id) {
+		try {
 		return affiliatesRepository.findById(id);
+		}catch(Exception e) {
+			throw new ResponseStatusException(
+					HttpStatus.NOT_FOUND,"Affiliate Not Found",e);
+		}
 	}
 	
 	@GetMapping("/getbydate/{date}")

@@ -28,6 +28,7 @@ public class Appointments {
 	private int id;
 
 	@NotNull
+	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	@JsonFormat(pattern = "dd-MM-yyyy")
 	private Date date;
 
@@ -86,6 +87,26 @@ public class Appointments {
 		this.tests = tests;
 	}
 
+	public Appointments() {
+	}
+
+	public Appointments(int id, @NotNull Date date, @NotNull Date hour, Affiliates affiliates, Tests tests) {
+		this.id = id;
+		this.date = date;
+		this.hour = hour;
+		this.affiliates = affiliates;
+		this.tests = tests;
+	}
+
+	public Appointments(@NotNull Date date, @NotNull Date hour, Affiliates affiliates, Tests tests) {
+		this.date = date;
+		this.hour = hour;
+		this.affiliates = affiliates;
+		this.tests = tests;
+	}
+
+	
+	
 	
 	
 }

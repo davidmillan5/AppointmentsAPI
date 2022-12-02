@@ -73,6 +73,40 @@ public class Affiliates {
 		this.appointments = appointments;
 	}
 
+	public Affiliates() {
+		
+	}
+
+	public Affiliates(int id, @NotNull String name, @NotNull int age, @NotNull String mail,
+			Set<Appointments> appointments) {
+		this.id = id;
+		this.name = name;
+		this.age = age;
+		this.mail = mail;
+		this.appointments = appointments;
+	}
+
+	public Affiliates(@NotNull String name, @NotNull int age, @NotNull String mail) {
+		this.name = name;
+		this.age = age;
+		this.mail = mail;
+	}
+
+	public Affiliates(int id, @NotNull String name, @NotNull int age, @NotNull String mail) {
+		this.id = id;
+		this.name = name;
+		this.age = age;
+		this.mail = mail;
+	}
+
+	public Affiliates(@NotNull String name, @NotNull int age, @NotNull String mail, Set<Appointments> appointments) {
+		this.name = name;
+		this.age = age;
+		this.mail = mail;
+		this.appointments = appointments;
+	}
+
+	
 	
 	
 

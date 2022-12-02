@@ -67,6 +67,25 @@ public class Tests {
 	public void setAppointments(Set<Appointments> appointments) {
 		this.appointments = appointments;
 	}
+
+
+	public Tests() {
+	}
+
+
+	public Tests(int id, @NotNull String name, @NotNull String description, Set<Appointments> appointments) {
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.appointments = appointments;
+	}
+
+
+	public Tests(@NotNull String name, @NotNull String description, Set<Appointments> appointments) {
+		this.name = name;
+		this.description = description;
+		this.appointments = appointments;
+	}
 	
 	
 	
