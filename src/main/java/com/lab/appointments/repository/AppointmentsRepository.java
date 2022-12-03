@@ -13,11 +13,9 @@ import com.lab.appointments.model.Appointments;
 public interface AppointmentsRepository extends JpaRepository<Appointments,Integer> {
 
 	@Query(
-			
-			value = "SELECT appointments.date FROM appointments where appointments.date LIKE %:date% group by id_affiliates",
-			nativeQuery = true
+			value = "SELECT A FROM Appointments A WHERE A.date =?1 ORDER BY A.affiliates.id"
 			)
-	List<Appointments> getbydate(@Param("date")Date date);
+	List<Appointments> getbydate(Date date);
 	
 	
 }

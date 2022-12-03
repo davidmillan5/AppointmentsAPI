@@ -86,6 +86,13 @@ public class Tests {
 		this.description = description;
 		this.appointments = appointments;
 	}
+
+
+	public Tests(int id, @NotNull String name, @NotNull String description) {
+		this.id = id;
+		this.name = name;
+		this.description = description;
+	}
 	
 	
 	

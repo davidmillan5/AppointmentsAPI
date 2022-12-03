@@ -105,6 +105,11 @@ public class Appointments {
 		this.tests = tests;
 	}
 
+	public Appointments(int id, @NotNull Date date) {
+		this.id = id;
+		this.date = date;
+	}
+
 	
 	
 	

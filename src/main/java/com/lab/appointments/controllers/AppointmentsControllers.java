@@ -162,7 +162,7 @@ public class AppointmentsControllers {
 	}
 	
 	@GetMapping("/getbydate/{date}")
-	public ResponseEntity<?>getbydate(@RequestParam Date date){
+	public ResponseEntity<?>getbydate(Date date){
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(appointmentsRepository.getbydate(date));
 		}catch(Exception e) {

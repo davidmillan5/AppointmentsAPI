@@ -1,9 +1,12 @@
 package com.lab.appointments.controllers;
 
+
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +32,7 @@ public class AffiliatesControllers {
 	@PostMapping("/post/")
 	public void saveAffiliate(@RequestBody Affiliates affiliates) {
 		try {
-			affliliatesServices.save(affiliates);
+			ResponseEntity.status(HttpStatus.OK).body(affliliatesServices.save(affiliates));
 		}catch(Exception e) {
 			throw new ResponseStatusException(
 					HttpStatus.NOT_FOUND,"Affiliates Not Found",e);
