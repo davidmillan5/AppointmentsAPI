@@ -87,5 +87,9 @@ public class AffiliatesControllers {
 					HttpStatus.NO_CONTENT,"Not Affiliate Present",e);
 		}
 	}
+	
+	
+
+	
 
 }

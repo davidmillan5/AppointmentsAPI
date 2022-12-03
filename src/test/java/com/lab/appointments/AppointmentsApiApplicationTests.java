@@ -1,6 +1,7 @@
 package com.lab.appointments;
 
 import static org.junit.Assert.assertEquals;
+
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -10,15 +11,22 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.assertj.core.api.Assertions;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import com.lab.appointments.controllers.AffiliatesControllers;
 import com.lab.appointments.model.Affiliates;
 import com.lab.appointments.model.Appointments;
 import com.lab.appointments.model.Tests;
@@ -56,7 +64,6 @@ class AppointmentsApiApplicationTests {
 	private AppointmentsRepository appointmentsRepository;
 	
 	
-
 	@Test
 	public void findAllAffiliatesTests() {
 		when(affiliatesRepository.findAll()).thenReturn(Stream.of(new Affiliates(1, "sofia", 17, "sofia@gmail.com"),
@@ -74,37 +81,44 @@ class AppointmentsApiApplicationTests {
 		assertEquals(2, testsServices.findAll().size());
 	}
 	
-	@Test
-	public void findByIdTests() {
-		Affiliates affiliates1 = new Affiliates();
-		affiliates1.setId(100);
-		affiliates1.setAge(17);
-		affiliates1.setName("Sofia");
-		affiliates1.setMail("sofia@gmail.com");
-		affiliatesRepository.save(affiliates1);
-		
-		Affiliates existingAfffiliates = affiliatesRepository.findById(affiliates1.getId()).get();
-		
-		assertNotNull(existingAfffiliates);
-		assertEquals("Sofia",existingAfffiliates.getName());
-		assertEquals("sofia@gmail.com",existingAfffiliates.getMail());
-	}
-	
+
 	
 	@Test
-	public void saveTests() {
+	public void saveTestsAffiliates() {
 		Affiliates affiliate = new Affiliates(3, "Estefania Osorio", 28, "Estefania@gmail.com");
 		when(affiliatesRepository.save(affiliate)).thenReturn(affiliate);
 		assertEquals(affiliate, affiliatesServices.save(affiliate));
 
 	}
+	
 
 	@Test
-	public void deleteTests() {
+	public void saveTestsTests() {
+		Tests tests = new Tests(5, "Blood Work", "Full Blood Analysis");
+		when(testsRepository.save(tests)).thenReturn(tests);
+		assertEquals(tests, testsServices.save(tests));
+
+	}
+	
+	
+
+	@Test
+	public void deleteTestsAffiliates() {
 		Affiliates affiliate = new Affiliates(3, "Estefania Osorio", 28, "Estefania@gmail.com");
 		affiliatesServices.delete(3);
 		verify(affiliatesRepository, times(1)).deleteById(3);
 
 	}
 
+	
+	@Test
+	public void deleteTestsTests() {
+		Tests tests = new Tests(5, "Blood Work", "Full Blood Analysis");
+		testsServices.delete(5);
+		verify(testsRepository, times(1)).deleteById(5);
+
+	}
+	
+
+	
 }
