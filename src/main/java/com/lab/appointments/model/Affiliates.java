@@ -5,9 +5,9 @@ package com.lab.appointments.model;
 import java.util.HashSet;
 import java.util.Set;
 
-
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,7 +30,7 @@ public class Affiliates {
 	@NotNull
 	private String mail;
 
-	@OneToMany(mappedBy = "affiliates")
+	@OneToMany(mappedBy = "affiliates", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<Appointments> appointments = new HashSet<>();
 
 	public int getId() {
@@ -104,6 +104,11 @@ public class Affiliates {
 		this.age = age;
 		this.mail = mail;
 		this.appointments = appointments;
+	}
+
+	@Override
+	public String toString() {
+		return "Affiliates [id=" + id + ", name=" + name + ", age=" + age + ", mail=" + mail + "]";
 	}
 
 	
